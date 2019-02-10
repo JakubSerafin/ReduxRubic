@@ -3,49 +3,88 @@ import ReactDOM from "react-dom";
 
 import "./styles.css";
 
-function Cube() {
-  return (
-    <div className="App">
-      <Wall />
-      <Wall />
-      <Wall />
-      <Wall />
-      <Wall />
-      <Wall />
+var CellsNames = ["Z", "B", "C", "D", "E", "F"];
+class RubicCube {
+  State = [[]];
 
-    </div>
-  );
+  constructor() {
+    this.State = [];
+    for (let i = 0; i < 7; i++) {
+      this.State.fill(CellsNames[i], 9 * i, 9 * i + 9);
+    }
+  }
 }
 
-function Wall()
-{
-  return (
-    <div>
-      <div>
-        <Cell />
-        <Cell />
-        <Cell />
+class Cube extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <table>
+          <tr>
+            <td />
+            <td>
+              <Wall cells={this.props.cube.State} />
+            </td>
+            <td />
+            <td />
+          </tr>
+          <tr>
+            <td>
+              <Wall />
+            </td>
+            <td>
+              <Wall />
+            </td>
+            <td>
+              <Wall />
+            </td>
+            <td>
+              <Wall />
+            </td>
+          </tr>
+          <tr>
+            <td />
+            <td>
+              <Wall />
+            </td>
+            <td />
+            <td />
+          </tr>
+        </table>
       </div>
+    );
+  }
+}
+class Wall extends React.Component {
+  render() {
+    return (
       <div>
-        <Cell />
-        <Cell />
-        <Cell />
+        <div>
+          <Cell cellText={this.props.cells[0]} />
+          <Cell />
+          <Cell />
+        </div>
+        <div>
+          <Cell />
+          <Cell />
+          <Cell />
+        </div>
+        <div>
+          <Cell />
+          <Cell />
+          <Cell />
+        </div>
       </div>
-      <div>
-        <Cell />
-        <Cell />
-        <Cell />
-      </div>
-    </div>
-  )
+    );
+  }
 }
 
-function Cell()
-{
-  return (
-    <span>A</span>
-  )
+class Cell extends React.Component {
+  render() {
+    return <span>{this.props.cellText}</span>;
+  }
 }
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<Cube />, rootElement);
+const rcube = new RubicCube();
+ReactDOM.render(<Cube cube={rcube} />, rootElement);
