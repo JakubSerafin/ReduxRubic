@@ -1,2 +1,0 @@
-# ReduxRubic
-Created with CodeSandbox
